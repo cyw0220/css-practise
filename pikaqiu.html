@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>皮卡丘</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        *::after {
+            box-sizing: border-box;
+        }
+        *::before {
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .code-warpper {
+            height: 50%;
+        }
+        .preview-wrapper {
+            height: 50%;
+        }
+        #code {
+            overflow: auto;
+            height: 100%;
+        }
+    </style>
+    <style id="styleTag"></style>
+</head>
+<body>    
+    <div class="code-warpper">
+        <pre id="code"></pre>
+    </div>
+    <div class="preview-wrapper">
+        <div class="preview">
+            <div class="wrapper">
+                <div class="lowerLip-wrapper">
+                    <div class="lowerLip"></div>
+                </div>
+                <div class="nose"></div>
+                <div class="eye eyeLeft"></div>
+                <div class="eye eyeRight"></div>
+                <div class="face left"></div>
+                <div class="face right"></div>
+                <div class="upperLip left"></div>
+                <div class="upperLip right"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const duration = 5
+        const code = `
+            .preview {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #fde348;
+            }
+            .wrapper {
+                position: relative;
+                width: 100%;
+                height: 165px;            
+            }
+            .nose {
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-radius: 11px;
+                border: 11px solid black;
+                border-color: black transparent transparent;
+                top: 28px;
+                left: 50%;
+                margin-left: -11px;
+            }
+            .eye {
+                position: absolute;
+                width: 49px;
+                height: 49px;
+                background: #2e2e2e;
+                border-radius: 50%;
+                border: 2px solid #000000;
+            }
+            .eye::before {
+                content: '';
+                background-color: white;
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                border: 2px solid #000;
+                left: 6px;
+                top: -1px;
+            }
+            .eye.eyeLeft {
+                right: 50%;
+                margin-right: 90px;
+            }
+            .eye.eyeRight {
+                left: 50%;
+                margin-left: 90px;
+            }
+            .face {
+                position: absolute;
+                width: 68px;
+                height: 68px;
+                background-color: #fc0d1c;
+                border-radius: 50%;
+                border: 2px solid black;
+                top: 85px;
+            }
+            .face.left {
+                right: 50%;
+                margin-right: 116px;
+            }
+            .face.right {
+                left: 50%;
+                margin-left: 116px;
+            }
+            .upperLip {
+                position: absolute;
+                height: 20px;
+                width: 80px;
+                border: 2px solid black;
+                top: 52px;
+                background-color: #fde348;
+            }
+            .upperLip.left {
+                right: 50%;
+                border-bottom-left-radius: 40px 25px;
+                border-top: none;
+                border-right: none;
+                transform: rotate(-20deg);
+            }
+            .upperLip.right {
+                left: 50%;
+                border-bottom-right-radius: 40px 20px;
+                border-top: none;
+                border-left: none;
+                transform: rotate(20deg);
+            }
+            .lowerLip-wrapper {
+                position: absolute;            
+                height: 108px;  
+                width: 300px;
+                bottom: 0;
+                left: 50%;
+                margin-left: -150px;
+                overflow: hidden;
+            }
+            .lowerLip {
+                position: absolute;
+                height: 3500px;
+                width: 300px;
+                bottom: 0;
+                background-color: #990501;
+                border-radius: 200px/2000px;
+                border: 2px solid black;
+                overflow: hidden;
+            }
+            .lowerLip::after {
+                content: '';
+                position: absolute;
+                width: 100px;
+                height: 100px;
+                bottom: -20px;
+                left: 50%;
+                margin-left: -50px;
+                border-radius: 50px;
+                background-color: #fc4a62;
+            }
+        `
+
+        function start(code) {
+            let container = document.querySelector('#code')
+            let styleTag = document.querySelector('#styleTag')
+            let n = 0
+            setTimeout(function run() {
+                n++
+                container.innerHTML = code.substring(0, n)
+                styleTag.innerHTML = code.substring(0, n)
+                container.scrollTop = parseInt(container.scrollHeight, 10)
+                if(n < code.length) {
+                    setTimeout(run, duration)
+                }
+            }, duration)
+        }
+        start(code)
+    </script>
+</body>
+</html>
